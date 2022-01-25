@@ -67,7 +67,7 @@ services:
       - 9798
     ports:
       - 9798:9798
-    image: miguelndecarvalho/speedtest-exporter
+    image: darrenmeehan42/cloudflare-speedtest-exporter:4.0.2
     restart: always
     networks:
       - back-tier
