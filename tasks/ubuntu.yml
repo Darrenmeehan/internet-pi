@@ -1,0 +1,22 @@
+---
+
+- name: Ensure DNSStubListener is set to no
+  ansible.builtin.lineinfile:
+    path: /etc/systemd/resolved.conf
+    line: DNSStubListener=no
+
+# sudo ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
+- name: Create symbolic link 
+  ansible.builtin.file:
+    src: /run/systemd/resolve/resolv.conf
+    dest: /etc/resolv.conf
+    state: link
+
+# FIXME May require a reboot
+# sudo systemctl restart systemd-resolved
+- name: Restart systemd-resolved
+  ansible.builtin.systemd:
+    name: systemd-resolved
+    state: restarted
+    enabled: yes
+  become: true
